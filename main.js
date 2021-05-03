@@ -1,30 +1,20 @@
-var num_array = [3,'9000   ',901];
-var get_num = {
-  0: 'Zero',
-  1: 'One',
-  2: 'Two',
-  3: 'Three',
-  4: 'Four',
-  5: 'Five',
-  6: 'Six',
-  7: 'Seven',
-  8: 'Eight',
-  9: 'Nine'
-}
-let k_arr = []
-for (let each of num_array) {
-    if (typeof parseInt(each) != 'number') {
-        // test = parseInt(each)
-        console.log('Enter only numbers',typeof test)
-        return
+let num_array = process.argv.slice(2)
+const get_num = {   0: 'Zero',   1: 'One',   2: 'Two',   3: 'Three',   4: 'Four',   5: 'Five',   6: 'Six',   7: 'Seven',   8: 'Eight',   9: 'Nine' };
+
+function convert_num(number_array){
+    let k_arr = []
+    for (let each of number_array) {
+        if (/^(\s*[0-9]+\s*)+$/.test(each)) {
+            trimmed_str = each.trim();
+            let k = trimmed_str.split('').map(function(item) {
+                if (item != '') {
+                    return get_num[item]
+                }
+            }).join('');
+            k_arr.push(k)
+        }
     }
-    console.log(each)
-    var str1 = each.toString()
-    console.log(str1)
-    let k = str1.trim().split('').map(function(item) {
-        console.log(item)
-        return get_num[item]
-    }).join('');
-    k_arr.push(k)
+    return k_arr.join(',');
 }
-console.log(k_arr);
+
+console.log(convert_num(num_array));
